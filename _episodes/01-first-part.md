@@ -1,47 +1,47 @@
 ---
-title: "Advanced UNIX and Make"
+title: "Advanced Unix and Make"
 teaching: 60
 exercises: 6
 questions:
-- "Why is UNIX (Linux) a standard platform for neuroimaging?"
+- "Why is Unix (Linux) a standard platform for neuroimaging?"
 objectives:
-- "Understand some tenents of UNIX philosophy and how these support reproducible research"
+- "Understand some tenents of Unix philosophy and how these support reproducible research"
 - "Review streams and pipes"
 - "Describe little languages (globbing, regexps, sed, awk, grep) and how they can be used for basic tasks"
 - "Intro to make"
 keypoints:
-- There are good reasons that UNIX has been in use for fifty years
+- There are good reasons that Unix has been in use for fifty years
 
 ---
 
-### Why is UNIX (Linux) a standard platform for neuroimaging?
+### Why is Unix (Linux) a standard platform for neuroimaging?
 
-If you do neuroimaging, chances are that you have been exposed to Linux, the open source version of UNIX, which was first developed by AT&T in the late 1960's. (Or it might be more accurate to say that Linux has been exposed to you.) There are in fact many distributions of Linux that you may have heard of or use, including Debian, Ubuntu, CentOS and RedHat. If you use Amazon Web Services you may use Amazon Linux, which is most closely related to CentOS. If you use a Macintosh you are running OS X, an operating system which grew out of an early version of UNIX. 
+If you do neuroimaging, chances are that you have been exposed to Linux, the open source version of Unix, which was first developed by AT&T in the late 1960's. (Or it might be more accurate to say that Linux has been exposed to you.) There are in fact many distributions of Linux that you may have heard of or use, including Debian, Ubuntu, CentOS and RedHat. If you use Amazon Web Services you may use Amazon Linux, which is most closely related to CentOS. If you use a Macintosh you are running OS X, an operating system which grew out of an early version of Unix. 
 
-For the purposes of this tutorial, all Linux or UNIX operating systems are similar in that they allow you to issue certain commands in a shell (here we assume `bash`, a Bourne-again version of the original Bourne shell called `sh`). The shell is in fact a programming languages in its own right, allowing you to write scripts with looping and conditional constructs and to save them to reexecute the command sequences. In a shell script you can incorporate not only programs that are part of the UNIX environment, but programs that are part of neuroimaging packages (e.g. FSL, FreeSurfer, Advanced Normalization Tools) or programs that you have written yourself (e.g. in Python or R, or any scripting language). 
+For the purposes of this tutorial, all Linux or Unix operating systems are similar in that they allow you to issue certain commands in a shell (here we assume `bash`, a Bourne-again version of the original Bourne shell called `sh`). The shell is in fact a programming languages in its own right, allowing you to write scripts with looping and conditional constructs and to save them to reexecute the command sequences. In a shell script you can incorporate not only programs that are part of the Unix environment, but programs that are part of neuroimaging packages (e.g. FSL, FreeSurfer, Advanced Normalization Tools) or programs that you have written yourself (e.g. in Python or R, or any scripting language). 
 
-So how does an operating system that is over fifty years old at its roots become the most commonly used platform for wild and wacky youthful neuroimaging?  The power of the UNIX programming environment comes from its design philosophy, which is well articulated by Mike Gancarz's book "The UNIX Philosophy." This philosophy really describes a methodology, which is still incredibly relevant to neuroimaging science today. Some of the tenents of this philosophy are as follows:
+So how does an operating system that is over fifty years old at its roots become the most commonly used platform for wild and wacky youthful neuroimaging?  The power of the Unix programming environment comes from its design philosophy, which is well articulated by Mike Gancarz's book "The Unix Philosophy." This philosophy really describes a methodology, which is still incredibly relevant to neuroimaging science today. Some of the tenents of this philosophy are as follows:
 
 * Small is beautiful (Make each program do one thing well)
 * Every program is a filter
 * Prototype quickly
 * Make portability a priority
 
-Let's deconstruct these one by one. First, Small is beautiful. It is much easier to write and maintain a small program than a large one. The more features you add, the more likely it is to malfunction somewhere and the harder it will be to support. This is why UNIX programs tend to do small and weird little things that make absolutely no sense at first. For example, why is there a program just to `echo` its arguments to the screen? By themselves they are not overly useful but in the context of other programs that do other things, they are very useful. Small and beautiful programs can be used in multiple places in scripts to do their one trick well.
+Let's deconstruct these one by one. First, Small is beautiful. It is much easier to write and maintain a small program than a large one. The more features you add, the more likely it is to malfunction somewhere and the harder it will be to support. This is why Unix programs tend to do small and weird little things that make absolutely no sense at first. For example, why is there a program just to `echo` its arguments to the screen? By themselves they are not overly useful but in the context of other programs that do other things, they are very useful. Small and beautiful programs can be used in multiple places in scripts to do their one trick well.
 This philosophy is clearly relevant to neuroimaging and to science more generally. Scientific workflows change frequently and programs that do a single thing are more likely to last and to be used than programs that "bundle" features together. 
 
-Second, every program is a filter. This means that programs accept data (normally text) as input and generate text output. They don't sit around being interactive with the user, asking for inputs or prompting for outputs. This allows us to use pipes and redirection to link together UNIX utilities in many creative ways. This works very well for text data, but is less clear for neuroimaging files, where standard binary formats such as NIFTI make it difficult to write simple filters for neuroimaging data. Many programs require multiple files of different formats as inputs. However, remembering the real purpose of a program (to filter data) helps us to recall why we shouldn't include lots of interactive features when they are not necessary.
+Second, every program is a filter. This means that programs accept data (normally text) as input and generate text output. They don't sit around being interactive with the user, asking for inputs or prompting for outputs. This allows us to use pipes and redirection to link together Unix utilities in many creative ways. This works very well for text data, but is less clear for neuroimaging files, where standard binary formats such as NIFTI make it difficult to write simple filters for neuroimaging data. Many programs require multiple files of different formats as inputs. However, remembering the real purpose of a program (to filter data) helps us to recall why we shouldn't include lots of interactive features when they are not necessary.
 
-UNIX is built on the concept of creating a prototype of your program quickly. In neuroimaging this is particularly important - most programs don't get beyond the level of first prototype because the research doesn't pan out, better methods emerge, or they are very limited in scope. It's better to just do it than to spend a lot of time planning or creating application specifications. So this makes a lot of sense.
+Unix is built on the concept of creating a prototype of your program quickly. In neuroimaging this is particularly important - most programs don't get beyond the level of first prototype because the research doesn't pan out, better methods emerge, or they are very limited in scope. It's better to just do it than to spend a lot of time planning or creating application specifications. So this makes a lot of sense.
 
 Finally, portability is more important than efficiency. It's much better to write a small script using a little language (we'll talk about those) that is relatively slow than to write an optimized C program to do the same thing that is faster, but only runs on some specialized hardware. In general, because computers continue to get faster, ease of programming and ease of sharing trump execution time. Scripts themselves are quite portable and people can read what is inside of them and steal parts for own use. 
 
 
 Linux is also free, a factor that is incredibly important in science. Money for research is incredibly scarce, and less money for licenses and software packages means more money for people and for the work itself. It is open source, which means that source code is publicly available and can be modified and redistributed. This support for transparency and collaboration is also a critical factor in the popularity of Linux as a platform for science.
 
-### Little languages are a key element in UNIX power use
+### Little languages are a key element in Unix power use
 
-It is easier to implement a task-specific language than a general purpose one. Thus, UNIX is filled with "little languages" that allow users to carry out certain tasks. Some of these languages are very relevant to neuroimaging tasks today, and we will introduce these in the context of normal, work-a-day neuroimgaging life. We will also review standard streams, pipes, and file redirection because they are so critical to linking together UNIX commands with little languages. 
+It is easier to implement a task-specific language than a general purpose one. Thus, Unix is filled with "little languages" that allow users to carry out certain tasks. Some of these languages are very relevant to neuroimaging tasks today, and we will introduce these in the context of normal, work-a-day neuroimgaging life. We will also review standard streams, pipes, and file redirection because they are so critical to linking together Unix commands with little languages. 
 
 The following is an outline of what we will cover:
 
@@ -94,7 +94,7 @@ done
 
 ### Standard streams and pipes
 
-A very important concept in UNIX is abstraction of input/output (I/O). This abstraction supports the writing of programs as filters. Conforming UNIX programs can read from and write to three special streams: standard input (`stdin`), standard output (`stdout`), and standard error (`stderr`). These are referenced by specific file descriptors (0, 1, and 2) used in the underlying C code to read and write from these streams. Thus, these can be "wired" to specific files in the file system, the terminal, or other output devices. 
+A very important concept in Unix is abstraction of input/output (I/O). This abstraction supports the writing of programs as filters. Conforming Unix programs can read from and write to three special streams: standard input (`stdin`), standard output (`stdout`), and standard error (`stderr`). These are referenced by specific file descriptors (0, 1, and 2) used in the underlying C code to read and write from these streams. Thus, these can be "wired" to specific files in the file system, the terminal, or other output devices. 
 
 Let us explore this with the program  `cat` as an example. By default `cat` reads its standard input and writes to standard output. By default these are wired to the terminal. So if you type the following, you will see your input `hi` and `there` echoed to the terminal. Note that CTRL-D (represented as ^D) marks the end of the input file (or EOF).
 
@@ -160,7 +160,7 @@ Note that `stderr` is wired to the terminal and `stdout` is directed to a file. 
 cat nonexistentfile.txt 2> error-message
 ~~~
 
-Although all "traditional" UNIX programs use these conventions, many neuroimaging programs do not accept `stdin` from a pipe and do not separate `stderr` and `stdout` streams. When redirecting output to a log file you should not make any assumptions!
+Although all "traditional" Unix programs use these conventions, many neuroimaging programs do not accept `stdin` from a pipe and do not separate `stderr` and `stdout` streams. When redirecting output to a log file you should not make any assumptions!
 
 >## So back to work on neuroimaging. 
 >
@@ -184,7 +184,7 @@ ls -1 */session_2/*/anat.nii.gz| wc -l
 >As you can see, there are indeed more anatomical scans in the first session than in the second. We'll have to do a more complex inventory of data.
 
 ## Regular expressions
-Regular expressions (or regexps) are sequences of characters that describe a pattern to match to other strings of characters. They are implemented in many "little languages" as a way to describe search strings to be used in many contexts. One confusion is that there are two major flavors of regexps: basic and extended. Different UNIX utilities will use one set or the other - so if you are baffled at why a tried and true expression is failing, check to see that it is supported. Here is a good [reference] (http://cavepopo.hd.free.fr/wordpress/bash/about-regular-expressions-basic-extended-2) for basic versus extended regular expressions and more detail than we will cover here. Another confusion is that filename wildcards (globbing) are *not* regular expressions, although on the surface they are a bit similar. Specifically, the conventions for wildcards and regular expressions are different, and regular expressions are much richer. In wildcards, a `*` matches zero or more characters. In regular expressions, as shown in the table below, a `*` indicates zero or more repetitions of the character that preceeds it. 
+Regular expressions (or regexps) are sequences of characters that describe a pattern to match to other strings of characters. They are implemented in many "little languages" as a way to describe search strings to be used in many contexts. One confusion is that there are two major flavors of regexps: basic and extended. Different Unix utilities will use one set or the other - so if you are baffled at why a tried and true expression is failing, check to see that it is supported. Here is a good [reference] (http://cavepopo.hd.free.fr/wordpress/bash/about-regular-expressions-basic-extended-2) for basic versus extended regular expressions and more detail than we will cover here. Another confusion is that filename wildcards (globbing) are *not* regular expressions, although on the surface they are a bit similar. Specifically, the conventions for wildcards and regular expressions are different, and regular expressions are much richer. In wildcards, a `*` matches zero or more characters. In regular expressions, as shown in the table below, a `*` indicates zero or more repetitions of the character that preceeds it. 
 
 Below is a simplified summary of commonly used regular expressions. (See a reference manual for complete details.) 
 
@@ -255,7 +255,7 @@ A common use for `awk` is to parse comma separated value files (csv files). In a
 > 
 > Here we have no pattern, only an action for every line, which is to print out the first field (`$1`). This is the subject id. This may be an easier way to think about extracting fields from data than the `sed` approach, which does not break things into fields.
 > 
-> Until now we have been looking only at anatomical data, but there are other scan types as well. We can use find to see what they are, use `awk` to extract the file names, and tabulate them using UNIX utilities `sort` and `uniq`.
+> Until now we have been looking only at anatomical data, but there are other scan types as well. We can use find to see what they are, use `awk` to extract the file names, and tabulate them using Unix utilities `sort` and `uniq`.
 > 
 > ~~~
 > find */*1 -name \*.nii.gz | awk -F/ '{print $4}' | sort | uniq -c
@@ -320,7 +320,7 @@ Grep, a program named for the command in `ed` to globally search a regular expre
 > ~~~
 >
 ## Make for neuroimaging workflow
-Make is a build automation tool that is an essential part of UNIX. When writing a program using a compiled language such as C, you typically put different functions in different files, to make it easier for multiple people to work together and to organize the project. Definitions common to several functions are stored separately and included by the files that need to reference them, to avoid replication of information. Each function is compiled into an object file, and these object files are linked together with system libraries into a single executable.
+Make is a build automation tool that is an essential part of Unix. When writing a program using a compiled language such as C, you typically put different functions in different files, to make it easier for multiple people to work together and to organize the project. Definitions common to several functions are stored separately and included by the files that need to reference them, to avoid replication of information. Each function is compiled into an object file, and these object files are linked together with system libraries into a single executable.
 
 This means that if a source file changes, one or more object files will need to be reconstructed, as will the entire executable.
 
@@ -344,7 +344,7 @@ A dependency graph for making spaghetti and meatballs might look like this.
 
 Now we can see clearly that (as we intuitively know) boiling the water and cooking the pasta can occur in parallel to the whole meatball making procedure. Both the spaghetti and meatballs need to be ready to plate up. Furthermore, we know that if we burn the meatballs, we need to start over at the stage of making them. If we cook the spaghetti to a mush, we need to boil a new pot of water. However, a script does not easily convey this dependency information. 
 
-Why would one use Make to describe this dependency graph and not some cooler and newer tool? We like using Make because the recipes can be in `bash`. This  means that the same commands we type in the terminal or use in a script can be put into a recipe. We don't need to write any additional wrappers, or additional code, which means we get results faster and can switch things up faster. Finally, `make` has been around for forty years and is stable, standard on all UNIX systems, and reliable. So when we hang out on the bleeding edge of neuroimaging technology, we can be certain that our workflow system doesn't have bugs. 
+Why would one use Make to describe this dependency graph and not some cooler and newer tool? We like using Make because the recipes can be in `bash`. This  means that the same commands we type in the terminal or use in a script can be put into a recipe. We don't need to write any additional wrappers, or additional code, which means we get results faster and can switch things up faster. Finally, `make` has been around for forty years and is stable, standard on all Unix systems, and reliable. So when we hang out on the bleeding edge of neuroimaging technology, we can be certain that our workflow system doesn't have bugs. 
 
 ### A neuroimaging workflow example
 An example neuroimaging workflow pipeline can involve many steps and many different packages. Let us consider a small example of how we typically do fMRI registration. Because not everyone might be familiar with the syntax of all the tools, I will just describe these steps generally. 
