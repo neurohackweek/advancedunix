@@ -340,7 +340,7 @@ While this is an accurate script of the steps involved in making pasta, it is no
 
 A dependency graph for making spaghetti and meatballs might look like this.
 
-![an image]({{site.root}}/assets/img/Spaghetti.png)
+![an image]({{site.root}}/assets/img/Spaghetti.jpg)
 
 Now we can see clearly that (as we intuitively know) boiling the water and cooking the pasta can occur in parallel to the whole meatball making procedure. Both the spaghetti and meatballs need to be ready to plate up. Furthermore, we know that if we burn the meatballs, we need to start over at the stage of making them. If we cook the spaghetti to a mush, we need to boil a new pot of water. However, a script does not easily convey this dependency information. 
 
@@ -361,7 +361,7 @@ An example neuroimaging workflow pipeline can involve many steps and many differ
  
 We can draw the dependency graph for this more relevant example:
 
-![an image]({{site.root}}/assets/img/neuroimaging-workflow-example.png)
+![an image]({{site.root}}/assets/img/neuroimaging-workflow-example.jpg)
 
 ### Makefile syntax
 Rules for Make are described in a text file that is traditionally named `Makefile` (more generally, let's call this a makefile). The format of a makefile is a set of specifications for how to create target files from dependency files as follows:
