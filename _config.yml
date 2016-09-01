@@ -6,17 +6,17 @@
 kind: "lesson"
 
 # Overall title for pages.
-title: "Lesson template for Neurohackweek"
+title: "Advanced UNIX and Make"
 
 # Repository URL (without trailing slash).
-repo: https://github.com/neurohackweek/lesson-template
+repo: https://github.com/neurohackweek/advancedunix
 
 # Root URL below username.github.io domain, with leading slash but no trailing slash.
 # For example, for 'https://neurohackweek.github.io/lesson-example', use '/lesson-example'.
-root: "/lesson-template"
+root: "/advancedunix"
 
 # Contact email address.
-email: arokem@uw.edu
+email: madhyt@uw.edu
 
 #------------------------------------------------------------
 # Generic settings (should not need to change).
